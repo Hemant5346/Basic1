@@ -158,11 +158,115 @@ docker build -t brb-company-service .
 docker-compose up
 ```
 
-## 💻 Contributing
-- Follow BRB's coding standards
-- Write clear commit messages
-- Include tests for new features
-- Update documentation
+## 💻 Local Development
+
+### Environment Setup
+
+#### Node
+Since the environment will be launched in Docker, `node_modules` will not exist on the host. Therefore, it is necessary to install the dependencies locally to avoid issues with editors and to run some commands. Below are the steps to follow:
+
+- Ensure Node.js version 20.16.0 is installed on the machine. Using `nvm` (Node Version Manager) is recommended to manage versions efficiently.
+
+#### Install Yarn
+```bash
+npm install --global yarn
+```
+
+#### Install Dependencies
+```bash
+yarn install
+```
+
+**Note**: If you're using Visual Studio Code and errors persist after installation, try restarting the application.
+
+#### Docker
+Make sure Docker is installed and the engine is running so you can execute the commands in the following steps.
+
+### Starting the Server
+To start the server locally, use the Dockerfile and `docker-compose.local.yml` as they contain the necessary configuration to launch the Node app and the database.
+
+To execute it:
+```bash
+docker-compose -f .\docker-compose.local.yml up
+```
+To run in the background:
+```bash
+docker-compose -f .\docker-compose.local.yml up -d
+```
+
+### Environment Variables Management
+#### `.env` vs `.env_example`
+- The `.env` file should not be committed to the repository for security reasons.
+- The `.env_example` file will be committed and should contain the same variables but with annotations or placeholder values for confidential variables. Share confidential values internally via secure project communication channels.
+
+#### Nest Environment
+- Validate the configuration file schema when working with NestJS. Ensure that any new variable is included in its respective file under `src/common/config`.
+
+### Installing New Dependencies
+To install new dependencies, use Yarn:
+```bash
+yarn add <new-dependency>
+```
+Then rebuild and restart the container:
+```bash
+docker-compose -f .\docker-compose.local.yml down
+docker-compose -f .\docker-compose.local.yml build
+docker-compose -f .\docker-compose.local.yml up
+```
+
+## 🧹 Linter and Formatter
+### Run Linter
+```bash
+docker exec -it ${DOCKER_CONTAINER_APP_NAME} yarn run lint
+```
+### Run Formatter
+```bash
+docker exec -it ${DOCKER_CONTAINER_APP_NAME} yarn run format
+```
+**Note**: These can also be run from the host if the necessary libraries are installed.
+
+#### Recommended Extensions
+For real-time linting recommendations, install the **ESLint** extension by Microsoft in VSCode.
+
+## 💬 Commits
+To maintain structured commits, the project uses **Commitizen**.
+
+### Process
+Run the following command:
+```bash
+yarn run commit
+```
+Follow the interactive steps:
+1. Select the type of commit (e.g., `feat` for a feature, `fix` for a bug fix).
+2. Specify the scope/component (e.g., `users` for the user module).
+3. Provide a short description.
+4. Optionally, add a detailed description.
+
+## 🧪 Running Tests
+### Run Tests
+#### Only Test Results
+```bash
+docker exec -it app yarn run test
+```
+#### Test Results with Coverage
+```bash
+docker exec -it app yarn run test:cov
+```
+
+## 🚀 Deployment to Stage or Production
+
+### Migration Management
+- Use the `.env` file to point to the remote database. Ensure access through IP, proxy, or any required method.
+- Only designated personnel should run migrations.
+
+### Docker
+For production, a different Docker Compose file (`docker-compose.yml`) is used. This configuration excludes the database and is optimized for production environments.
+
+## 🤝 Contributing
+- Follow BRB's coding standards.
+- Write clear commit messages.
+- Include tests for new features.
+- Update documentation.
 
 ## 📜 License
 Proprietary - BRB © 2024
