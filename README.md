@@ -1,11 +1,13 @@
-🌐 BRB Company Management Microservice
+# BRB Company Microservice
 
-✨ Overview
+## 🎯 Overview
+The **Company Management Microservice** is a core component of BRB's salon management platform. This service handles all company-related operations, including:
+- Salon management
+- Employee scheduling
+- Service bookings
 
-Welcome to the BRB Company Management Microservice — the heart of BRB's salon management platform. This microservice is designed to streamline company operations, including salon management, employee scheduling, and service bookings.
-
-🏙️ Microservice Architecture
-
+## 🏗️ Microservice Architecture
+```mermaid
 graph TD
     A[API Gateway] --> B[Company Service]
     B --> C[MongoDB]
@@ -13,15 +15,162 @@ graph TD
     B <--> E[Booking Service]
     B <--> F[Payment Service]
     B <--> G[AI Revenue Service]
+```
 
-🔗 Service Dependencies
+### 🔗 Service Dependencies
+- **User Service**: Authentication and user management
+- **Booking Service**: Appointment scheduling
+- **Payment Service**: Transaction processing
+- **AI Revenue Service**: Revenue predictions
+- **Storage Service**: File management
 
-User Service: Handles authentication and user management.
+## 🛠️ Tech Stack
+- **Framework**: NestJS v10
+- **Runtime**: Node.js ≥20.16.0
+- **Database**: MongoDB with Mongoose ODM
+- **API**: REST with Fastify
+- **Documentation**: Swagger/OpenAPI
+- **Testing**: Jest
+- **CI/CD**: GitHub Actions
 
-Booking Service: Manages appointment scheduling.
+## 📋 Prerequisites
+```json
+"engines": {
+    "npm": ">=10.5.0",
+    "node": ">=20.16.0"
+}
+```
 
-Payment Service: Processes transactions securely.
+## 🚀 Quick Start
 
-AI Revenue Service: Provides revenue predictions.
+### Installation
+```bash
+# Install dependencies
+yarn install
+```
 
-Storage Service: Manages file storage.
+### Configuration
+Create a `.env` file with the following:
+```env
+# App
+APP_PORT=3000
+APP_PREFIX=api/v1
+APP_HOST_SERVER=http://localhost:3000
+
+# MongoDB
+MONGO_PREFIX=mongodb
+MONGO_URL=localhost:27017
+MONGO_DB=brb_company_db
+
+# Service URLs
+USER_SERVICE_URL=http://localhost:3001
+BOOKING_SERVICE_URL=http://localhost:3002
+PAYMENT_SERVICE_URL=http://localhost:3003
+
+# JWT
+JWT_SECRET=your_secret
+JWT_EXPIRE=24h
+```
+
+### Development
+```bash
+# Local development
+yarn start:dev
+
+# Production build
+yarn build
+yarn start:prod
+```
+
+## 📚 Core Features
+
+### Company Management
+- Salon profile management
+- Business settings
+- Location management
+- Revenue tracking
+
+### Employee Management
+- Staff profiles
+- Schedule management
+- Service assignments
+- Performance tracking
+
+### Service Catalog
+- Service management
+- Category organization
+- Pricing configuration
+- Availability control
+
+## 🔐 Security
+- JWT Authentication
+- Role-Based Access Control (RBAC)
+- Request validation
+- Rate limiting
+
+## 🧪 Testing
+```bash
+# Unit tests
+yarn test
+
+# E2E tests
+yarn test:e2e
+
+# Test coverage
+yarn test:cov
+```
+
+## 📂 Project Structure
+```
+src/
+├── app.module.ts
+├── main.ts
+├── common/
+│   ├── config/
+│   ├── decorators/
+│   ├── guards/
+│   └── interservices/
+└── modules/
+    ├── company/
+    ├── employee/
+    ├── service/
+    └── location/
+```
+
+## 🔄 CI/CD Pipeline
+- Automated testing
+- Code quality checks
+- Docker image building
+- Automated deployment
+
+## 📝 API Documentation
+Access Swagger documentation at:
+```
+http://localhost:3000/api/docs
+```
+
+## 🐳 Docker Support
+```bash
+# Build image
+docker build -t brb-company-service .
+
+# Run container
+docker-compose up
+```
+
+## 💻 Contributing
+- Follow BRB's coding standards
+- Write clear commit messages
+- Include tests for new features
+- Update documentation
+
+## 📜 License
+Proprietary - BRB © 2024
+
+## 🤝 Support
+For internal support:
+- **Slack**: `#company-service-support`
+- **Email**: `support@brb.com`
+- **Confluence**: [Company Service Wiki](#) (internal link)
+
+**Note**: This is a private repository. For access, please contact the BRB DevOps team.
